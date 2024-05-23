@@ -13,6 +13,7 @@ const facultyRouter = require("./FacultyRouter");
 const seniorRouter = require("./SeniorGroupRouter");
 const reportRouter = require("./ReportRouter");
 const requestRouter = require("./RequestRouter");
+const notificationRouter = require("./NotificationRouter");
 
 // Routes
 router.use("/auth", auth);
@@ -26,5 +27,6 @@ router.use("/admin", adminRouter);
 router.use("/bot", chatBotRouter);
 router.use("/report", reportRouter);
 router.use("/request", requestRouter);
+router.use("/notification", notificationRouter);
 
 module.exports = router;
