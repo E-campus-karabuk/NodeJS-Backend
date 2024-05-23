@@ -6,7 +6,7 @@ const ChatBot = require("../Models/chatBot");
 dotenv.config();
 
 // Configuration
-const api = process.env.API_KEY;
+const api = process.env.GEN_API_KEY;
 const genAI = new GoogleGenerativeAI(api);
 const generationConfig = {
   temperature: 0.9,
