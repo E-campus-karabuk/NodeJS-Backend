@@ -29,7 +29,7 @@ const createStudentRequest = async (req, res) => {
       title: "New Request",
       content: "You have a new request",
       type: "requestUpdate",
-      receiver: receiverUser._id,
+      recevier: user._id,
     });
     res.status(201).json(savedStudentRequest);
   } catch (error) {
@@ -180,7 +180,7 @@ const replyToRequest = async (req, res) => {
       title: "New Request",
       content: "You have a new reply to a request",
       type: "requestUpdate",
-      receiver: userId,
+      recevier: userId,
     });
     res.status(200).json(studentRequestToUpdate);
   } catch (error) {

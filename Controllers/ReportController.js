@@ -44,7 +44,7 @@ const createReport = async (req, res) => {
       title: "New Report",
       content: "You have a new report uploaded",
       type: "seniorReport",
-      receiver: groupToGetLecId.lecturer,
+      recevier: groupToGetLecId.lecturer,
     });
     await report.save();
     res.status(201).json(report);

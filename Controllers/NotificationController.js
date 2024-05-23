@@ -3,7 +3,7 @@ const Notification = require("../Models/notificationsModel");
 const getNotificationsForUser = async (req, res) => {
   try {
     const user = req.user;
-    const noti = await Notification.find({ receiver: user });
+    const noti = await Notification.find({ recevier: user });
 
     res.status(200).json({ noti });
   } catch (error) {
