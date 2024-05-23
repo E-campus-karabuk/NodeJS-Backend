@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const path = require("path");
 
 // Routers
 const auth = require("./AuthRouter");
@@ -27,6 +26,5 @@ router.use("/admin", adminRouter);
 router.use("/bot", chatBotRouter);
 router.use("/report", reportRouter);
 router.use("/request", requestRouter);
-router.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 module.exports = router;
