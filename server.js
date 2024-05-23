@@ -4,23 +4,26 @@ const routes = require("./Routes/index");
 const path = require("path");
 const cors = require("cors");
 
-// Middlewares
-const { isStudentUser } = require("./Middlewares/Roles");
+// Load environment variables from .env file
+require("dotenv").config();
 
 const app = express();
 
 app.use(cors());
-
 app.use(express.json());
+
+const mongoUrl = process.env.PRODUCTION_MONGO_URL;
+const port = process.env.DEV_PORT || 3060; // Fallback to 3060 if DEV_PORT is not defined
+
 mongoose
-  .connect("mongodb://127.0.0.1:27017/Senior")
+  .connect(mongoUrl)
   .then(() => {
-    app.listen(3060, () => {
-      console.log("server is on 3060");
+    app.listen(port, () => {
+      console.log(`Server is running on port ${port}`);
     });
   })
   .catch((err) => {
-    console.log(err.message);
+    console.error("Failed to connect to MongoDB", err.message);
   });
 
 // Routes
