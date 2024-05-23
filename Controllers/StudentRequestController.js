@@ -2,6 +2,7 @@ const studentRequest = require("../Models/studentRequest");
 const User = require("../Models/User/userMode");
 const Student = require("../Models/User/student");
 const Academician = require("../Models/User/academician");
+const Notification = require("../Models/notificationsModel");
 const fs = require("fs").promises;
 
 // Create a new student request
@@ -24,6 +25,12 @@ const createStudentRequest = async (req, res) => {
     });
 
     const savedStudentRequest = await newStudentRequest.save();
+    await Notification.create({
+      title: "New Request",
+      content: "You have a new request",
+      type: "requestUpdate",
+      receiver: receiverUser._id,
+    });
     res.status(201).json(savedStudentRequest);
   } catch (error) {
     res.status(500).json({ error: error.message });

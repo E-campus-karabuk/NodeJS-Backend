@@ -26,9 +26,13 @@ const notificationSchema = new Schema(
       type: String,
       default: "unread",
     },
+    recevier: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model(notificationSchema, "Notifications");
+module.exports = mongoose.model("Notifications", notificationSchema);
 module.exports.Types = Types;
