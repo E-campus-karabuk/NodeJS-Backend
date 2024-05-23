@@ -198,11 +198,23 @@ const uploadNote = async (req, res) => {
 const deleteNote = async (req, res) => {
   try {
     const { id } = req.params;
+    const { course } = req.query;
+    const courseToUpdate = await Course.findById(course);
+
+    if (!courseToUpdate) {
+      return res.status(404).json({ error: "Course not found" });
+    }
+
     const note = await Note.findById(id);
 
     if (!note) {
       return res.status(404).json({ error: "Note not found" });
     }
+
+    // Pull the note id
+    courseToUpdate.notes.pull(note._id);
+    await courseToUpdate.save();
+
     // Remove the file
     await Promise.all(
       note.file.map(async (filePath) => {
