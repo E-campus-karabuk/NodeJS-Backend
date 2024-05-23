@@ -14,8 +14,8 @@ const port = process.env.DEV_PROT;
 mongoose
   .connect(mongoUrl)
   .then(() => {
-    app.listen(port || 3060, () => {
-      console.log("Server is running on port " + port || 3060);
+    app.listen(3060, () => {
+      console.log("Server is running on port 3060");
     });
   })
   .catch((err) => {
