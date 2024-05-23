@@ -165,6 +165,9 @@ const replyToRequest = async (req, res) => {
     const user = req.user;
     const { id } = req.params;
     const { reply } = req.body;
+    let userId;
+    const request = await studentRequest.findById(id);
+    if (request) userId = request.sender;
     const studentRequestToUpdate = await studentRequest.findOneAndUpdate(
       { _id: id },
       { receiverReply: reply, status: "replied" },
@@ -173,6 +176,12 @@ const replyToRequest = async (req, res) => {
     if (!studentRequestToUpdate) {
       return res.status(404).json({ message: "Request not found" });
     }
+    await Notification.create({
+      title: "New Request",
+      content: "You have a new reply to a request",
+      type: "requestUpdate",
+      receiver: userId,
+    });
     res.status(200).json(studentRequestToUpdate);
   } catch (error) {
     res.status(500).json({ error: error.message });
