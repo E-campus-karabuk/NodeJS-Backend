@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const routes = require("./Routes/index");
+const path = require("path");
 const cors = require("cors");
 
 // Load environment variables from .env file
@@ -27,3 +28,4 @@ mongoose
 
 // Routes
 app.use("/api", routes);
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
