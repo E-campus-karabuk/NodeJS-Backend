@@ -2,6 +2,7 @@ const { Note, Course } = require("../Models/course");
 const jwt = require("jsonwebtoken");
 const Student = require("../Models/User/student");
 const Academician = require("../Models/User/academician");
+const fs = require("fs");
 
 // get all courses
 const getAllCourses = async (req, res) => {
@@ -202,12 +203,12 @@ const deleteNote = async (req, res) => {
     if (!note) {
       return res.status(404).json({ error: "Note not found" });
     }
-    // TODO: Remove the file
-    // await Promise.all(
-    //   note.file.map(async (filePath) => {
-    //     await fs.unlink(filePath);
-    //   })
-    // );
+    // Remove the file
+    await Promise.all(
+      note.file.map(async (filePath) => {
+        await fs.unlinkSync(filePath);
+      })
+    );
 
     await Note.findByIdAndDelete(id);
 

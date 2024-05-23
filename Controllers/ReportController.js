@@ -1,5 +1,6 @@
 const Report = require("../Models/report");
 const multer = require("multer");
+const fs = require("fs");
 
 const upload = multer({ storage: multer.memoryStorage() });
 
@@ -48,6 +49,13 @@ const deleteReport = async (req, res) => {
   try {
     const { id } = req.params;
     const deletedReport = await Report.findByIdAndDelete(id);
+
+    // Remove the file
+    await Promise.all(
+      deletedReport.file.map(async (filePath) => {
+        await fs.unlinkSync(filePath);
+      })
+    );
 
     if (!deletedReport) {
       return res.status(404).json({ error: "Report not found" });
