@@ -6,6 +6,7 @@ const Types = {
   requestUpdate: "requestUpdate",
   announcement: "announcement",
   seniorReport: "seniorReport",
+  newMsg: "newMsg",
 };
 
 const notificationSchema = new Schema(
