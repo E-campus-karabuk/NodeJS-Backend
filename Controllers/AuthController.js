@@ -103,9 +103,14 @@ const getCurrentUser = async (req, res) => {
     }
 
     if (role.includes("Academician")) {
-      userDetails = await Academician.findOne({ user: user._id }).populate(
-        "departmentId"
-      );
+      userDetails = await Academician.findOne({ user: user._id }).populate({
+        path: "departmentId",
+        populate: {
+          path: "faculty",
+          select: "name",
+        },
+        select: "name",
+      });
 
       if (!userDetails) {
         return res.status(401).json({ msg: "No such academician" });
