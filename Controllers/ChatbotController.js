@@ -50,7 +50,7 @@ const TestBot = async (req, res) => {
   try {
     const text = await extractTextFromPDF("PdfFiles/SINAV_YONETMELIGI.pdf");
     const prompt = req.body.prompt;
-    const rule = `Given the text extracted from a PDF document, I'd like to ask a question related to the text. Please answer the question based solely on the provided text data, without referencing external knowledge or information beyond what is contained in the text. question : ${prompt}. given text : ${text}`;
+    const rule = `Given the text extracted from a PDF document, I'd like to ask a question related to the text. Please answer the question based solely on the provided text data, without referencing external knowledge or information beyond what is contained in the text, also if asked in english answer in english, if in turkish answer in turkish. question : ${prompt}. given text : ${text}`;
     const response = await generateContent(rule);
     return res.status(200).json({ response });
   } catch (error) {
@@ -87,7 +87,9 @@ const sendMessage = async (req, res) => {
     if (topic == "marks") {
       text = await extractTextFromPDF("PdfFiles/OLCME_VE_DEGERLENDIRME.pdf");
     }
-    const rule = `you are a text parser, i want you to summarize an answer for me from the given text. given question : ${prompt}. given text : ${text}`;
+    const rule = `You are a text parser. Summarize the answer from the given text. Respond in the same language as the question. If the question is in English, answer in English; if it's in Turkish, answer in Turkish. If there's no information about the given question, respond with 'There is no information about your question' based on the question's language.
+    Given question: ${prompt}
+    Given text: ${text}`;
     const response = await generateContent(rule);
     await ChatBot.create({ question: prompt, response: response });
     return res.status(200).json({ answer: response });
