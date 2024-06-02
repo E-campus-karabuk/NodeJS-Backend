@@ -11,6 +11,7 @@ const {
   getDepartmentByUser,
   deleteDepartmentCorse,
   addDepartmentCorse,
+  addDepartmentMultipleCourses,
 } = require("../Controllers/departmentController");
 const { authenticateUser } = require("../Middlewares/Auth");
 
@@ -22,6 +23,7 @@ router.get("/:id", getDepartmentById);
 router.post("/addWorker/:id", addWorker);
 router.delete("/deleteWorker/:id", deleteWorker);
 router.post("/addCorse/:id", addDepartmentCorse);
+router.post("/addMultipleCourses/:id", addDepartmentMultipleCourses);
 router.delete("/deleteCorse/:id", deleteDepartmentCorse);
 router.post("/create", createDepartment);
 router.put("/update/:id", updateDepartment);

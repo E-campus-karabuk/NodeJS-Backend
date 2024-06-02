@@ -98,6 +98,21 @@ const addDepartmentCorse = async (req, res) => {
   }
 };
 
+const addDepartmentMultipleCourses = async (req, res) => {
+  try {
+    const { courses } = req.body;
+    const department = await Department.findById(req.params.id);
+    courses.forEach(async (course) => {
+      const newCourse = await DepartmentCorse.create(course);
+      department.corses.push(newCourse);
+    });
+    await department.save();
+    return res.status(201).json(department);
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+};
+
 // delete a worker from a department
 
 const deleteWorker = async (req, res) => {
@@ -182,4 +197,5 @@ module.exports = {
   getDepartmentByUser,
   addDepartmentCorse,
   deleteDepartmentCorse,
+  addDepartmentMultipleCourses,
 };

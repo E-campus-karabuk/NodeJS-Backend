@@ -49,8 +49,6 @@ const getMyCourses = async (req, res) => {
       }
     }
 
-    // TODO: Add a validation if there are a lecturer or not
-
     // Retrieve courses based on the constructed query
     const courses = await Course.find(query).populate({
       path: "lecturer",
