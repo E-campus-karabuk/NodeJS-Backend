@@ -54,10 +54,13 @@ const getAcademicianById = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const academician = await Academician.findById(id);
+    let academician = await Academician.findById(id);
 
     if (!academician) {
-      return res.status(401).json({ msg: "No such academician" });
+      academician = await Academician.findOne({ user: id });
+      if (!academician) {
+        return res.status(401).json({ msg: "No such academician" });
+      }
     }
 
     const user = await User.findById(academician.user);
