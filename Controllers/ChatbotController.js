@@ -87,10 +87,16 @@ const sendMessage = async (req, res) => {
     if (topic == "marks") {
       text = await extractTextFromPDF("PdfFiles/OLCME_VE_DEGERLENDIRME.pdf");
     }
-    const rule = `You are a text parser. Summarize the answer from the given text. Respond in the same language as the question. If the question is in English, answer in English; if it's in Turkish, answer in Turkish. If there's no information about the given question, respond with 'There is no information about your question' based on the question's language.
+
+    const rule = `You are a text parser. Summarize the answer from the given text. Respond in the same language as the question. If the question is in English, answer in English; if it's in Turkish, answer in Turkish. If the givenText doesn't provide the answer, use the latest information you have about Turkish universities to answer the question.
     Given question: ${prompt}
-    Given text: ${text}`;
-    const response = await generateContent(rule);
+    givenText: ${text}`;
+
+    const rule2 = `You are a turkish universites expert. Answer the question based on the latest information you have about Turkish universities. Respond in the same language as the question. If the question is in English, answer in English; if it's in Turkish, answer in Turkish.
+    
+    Given question: ${prompt}`;
+
+    const response = await generateContent(rule2);
     await ChatBot.create({ question: prompt, response: response });
     return res.status(200).json({ answer: response });
   } catch (error) {

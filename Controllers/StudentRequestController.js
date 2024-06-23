@@ -29,7 +29,7 @@ const createStudentRequest = async (req, res) => {
       title: "New Request",
       content: "You have a new request",
       type: "requestUpdate",
-      recevier: user._id,
+      recevier: receiverUser._id,
     });
     res.status(201).json(savedStudentRequest);
   } catch (error) {

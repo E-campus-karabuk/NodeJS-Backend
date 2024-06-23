@@ -25,4 +25,22 @@ const updateStatus = async (req, res) => {
   }
 };
 
-module.exports = { getNotificationsForUser, updateStatus };
+const changeStatusOfAllNotifications = async (req, res) => {
+  try {
+    const user = req.user;
+    const noti = await Notification.updateMany(
+      { recevier: user },
+      { status: "read" }
+    );
+
+    res.status(200).json({ noti });
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+};
+
+module.exports = {
+  getNotificationsForUser,
+  updateStatus,
+  changeStatusOfAllNotifications,
+};
