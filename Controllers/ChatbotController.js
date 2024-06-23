@@ -96,7 +96,7 @@ const sendMessage = async (req, res) => {
     
     Given question: ${prompt}`;
 
-    const response = await generateContent(rule2);
+    const response = await generateContent(rule);
     await ChatBot.create({ question: prompt, response: response });
     return res.status(200).json({ answer: response });
   } catch (error) {
